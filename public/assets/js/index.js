@@ -1,3 +1,11 @@
+const express = require('express');
+const path = require('path');
+const fs = require('fs')
+
+const PORT = 3001;
+// const index = require('/public/index.html');
+// const notes = require('/public/notes.html');
+
 let noteTitle;
 let noteText;
 let saveNoteBtn;
@@ -11,6 +19,10 @@ if (window.location.pathname === '/notes') {
   newNoteBtn = document.querySelector('.new-note');
   noteList = document.querySelectorAll('.list-container .list-group');
 }
+
+app.get('/', (req, res) =>
+  res.sendFile(path.join(__dirname, '/public/notes.html'))
+);
 
 // Show an element
 const show = (elem) => {
