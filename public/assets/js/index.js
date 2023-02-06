@@ -1,10 +1,13 @@
 const express = require('express');
+
 const path = require('path');
-const fs = require('fs')
+
+const fs = require('fs');
+
+const app = express();
 
 const PORT = 3001;
-// const index = require('/public/index.html');
-// const notes = require('/public/notes.html');
+
 
 let noteTitle;
 let noteText;
@@ -12,13 +15,15 @@ let saveNoteBtn;
 let newNoteBtn;
 let noteList;
 
-if (window.location.pathname === '/notes') {
+if (window.location.pathname === '/notes.html') {
   noteTitle = document.querySelector('.note-title');
   noteText = document.querySelector('.note-textarea');
   saveNoteBtn = document.querySelector('.save-note');
   newNoteBtn = document.querySelector('.new-note');
   noteList = document.querySelectorAll('.list-container .list-group');
 }
+
+
 
 app.get('/', (req, res) =>
   res.sendFile(path.join(__dirname, '/public/notes.html'))
