@@ -4,17 +4,15 @@ let saveNoteBtn;
 let newNoteBtn;
 let noteList;
 
-if (window.location.pathname === '/notes.html') {
+const inNotes = window.location.pathname.split('/').pop() === 'notes.html';
+
+if (inNotes) {
   noteTitle = document.querySelector('.note-title');
   noteText = document.querySelector('.note-textarea');
   saveNoteBtn = document.querySelector('.save-note');
   newNoteBtn = document.querySelector('.new-note');
   noteList = document.querySelectorAll('.list-container .list-group');
 }
-
-app.get('/', (req, res) =>
-  res.sendFile(path.join(__dirname, '/public/notes.html'))
-);
 
 // Show an element
 const show = (elem) => {
@@ -31,15 +29,24 @@ let activeNote = {};
 
 
 const getNotes = () =>
-fetch('/api/notes', {
+fetch('http://localhost:3001/api', {
   method: 'GET',
   headers: {
     'Content-Type': 'application/json',
   },
+})
+.then(response => {
+  if (!response.ok) {
+    throw new Error('Network response was not ok');
+  }
+  return response.json();
+})
+.catch(error => {
+  console.error('There was a problem with the fetch operation:', error);
 });
 
 const saveNote = (note) =>
-  fetch('/api/notes', {
+  fetch('http://localhost:3001/api', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -48,7 +55,7 @@ const saveNote = (note) =>
   });
 
 const deleteNote = (id) =>
-  fetch(`/api/notes/${id}`, {
+  fetch(`http://localhost:3001/api${id}`, {
     method: 'DELETE',
     headers: {
       'Content-Type': 'application/json',
@@ -123,8 +130,8 @@ const handleRenderSaveBtn = () => {
 
 // Render the list of note titles
 const renderNoteList = async (notes) => {
-  let jsonNotes = await notes.json();
-  if (window.location.pathname === '/notes') {
+  let jsonNotes = notes;
+  if (inNotes) {
     noteList.forEach((el) => (el.innerHTML = ''));
   }
 
@@ -169,8 +176,9 @@ const renderNoteList = async (notes) => {
 
     noteListItems.push(li);
   });
+  // console.log(window.location.pathname.split('/').pop() === 'notes.html');
 
-  if (window.location.pathname === '/notes') {
+  if (inNotes) {
     noteListItems.forEach((note) => noteList[0].append(note));
   }
 };
