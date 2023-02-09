@@ -55,7 +55,7 @@ const saveNote = (note) =>
   });
 
 const deleteNote = (id) =>
-  fetch(`http://localhost:3001/api${id}`, {
+  fetch(`http://localhost:3001/api/${id}`, {
     method: 'DELETE',
     headers: {
       'Content-Type': 'application/json',
@@ -176,7 +176,7 @@ const renderNoteList = async (notes) => {
 
     noteListItems.push(li);
   });
-  // console.log(window.location.pathname.split('/').pop() === 'notes.html');
+  console.log(window.location.pathname.split('/').pop() === 'notes.html');
 
   if (inNotes) {
     noteListItems.forEach((note) => noteList[0].append(note));

@@ -22,7 +22,7 @@ notes.post("/", (req, res) => {
       id: uuidv4(),
     };
 
-    readAndAppend(note, "db/db.json");
+    readAndAppend(note, "../../db/db.json");
     res.json(`Your note has been added!`);
   } else {
     res.error("Sorry, we couldn't add your note.");
@@ -30,10 +30,10 @@ notes.post("/", (req, res) => {
 });
 
 notes.delete("/:id", (req, res) => {
-  readFromFile("db/db.json").then((data) => {
+  readFromFile("../../db/db.json").then((data) => {
     let parsedData = JSON.parse(data);
     let newData = parsedData.filter((note) => note.id != req.params.id);
-    writeToFile("db/db.json", newData);
+    writeToFile("/db/db.json", newData);
     res.json({});
   });
 });
