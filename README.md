@@ -9,7 +9,7 @@ An application called Note Taker that can be used to write and save notes. This 
 * [Contributions](#contribution)
 * [Tests](#testing)
 ## Installation
-No installation necessary. This is application is deployed at a live server.
+In order for the application to run, the user must have the node/nodemon server open in their terminal. This application is then deployed at a live server.
 ## Usage
 N/a
 ## License
